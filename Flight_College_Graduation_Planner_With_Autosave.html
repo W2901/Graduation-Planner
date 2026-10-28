@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>High School Planner — Verified Copy</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#182230;--muted:#5e6b7a;--line:#dbe2ea;--accent:#2859c5;--soft:#eaf0ff;--green:#18794e;--amber:#9a6700;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:#172b4d;color:white;padding:28px 18px}header .wrap,main{max-width:1100px;margin:auto}h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 8px}header p{margin:0;color:#dce7ff;max-width:760px}
+main{padding:20px 14px 50px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid var(--line);background:#fff;color:var(--accent);border-radius:999px;padding:10px 15px;cursor:pointer;font-weight:650}.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.panel{display:none}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 2px 7px #172b4d08}.half{grid-column:span 6}.third{grid-column:span 4}.metric{font-size:2rem;font-weight:800;letter-spacing:-.04em}.muted{color:var(--muted);font-size:.92rem}.small{font-size:.82rem;color:var(--muted)}h2{font-size:1.25rem;margin:0 0 12px}h3{font-size:1rem;margin:0 0 8px}.bar{height:10px;border-radius:99px;background:#e7ebf1;overflow:hidden;margin:10px 0}.bar>div{height:100%;background:var(--accent);width:0;transition:width .15s}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}label{font-size:.88rem;font-weight:650;display:block;margin:8px 0 4px}input,select,button{font:inherit}input,select{width:100%;border:1px solid #c9d2de;border-radius:9px;padding:9px 10px;background:white;color:var(--ink)}input[type=checkbox]{width:auto}button{border:0;border-radius:10px;padding:10px 14px;background:var(--accent);color:white;font-weight:700;cursor:pointer}button.secondary{background:#eef2f8;color:var(--ink);border:1px solid var(--line)}button.danger{background:#fff0ef;color:var(--red);border:1px solid #ffd0cc}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:680px}.course-table{min-width:1180px}.course-table td select{min-width:130px}.course-table td input[type=number]{min-width:80px}.course-table td input[type=checkbox]{min-width:18px}th,td{text-align:left;padding:9px 7px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:.8rem;color:var(--muted);font-weight:700}td input,td select{min-width:90px}.course-name{min-width:170px}.status{font-size:.8rem;font-weight:700;border-radius:999px;padding:4px 8px;display:inline-block;background:#eef2f8}.alert{border-left:4px solid var(--amber);padding:10px 12px;background:#fff8e6;border-radius:8px;margin:9px 0}.good{border-left-color:var(--green);background:#edf9f1}.links a{color:var(--accent)}.req-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.req{border:1px solid var(--line);border-radius:12px;padding:12px}.req-head{display:flex;justify-content:space-between;gap:8px;align-items:start}.req input{max-width:100px}.foot{margin-top:16px;font-size:.85rem;color:var(--muted)}
+.college-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.college-card{border:1px solid var(--line);border-radius:13px;padding:14px;background:#fff}.college-card.target-selected{border:2px solid var(--accent);background:#f7f9ff}.college-card .program{font-size:.84rem;color:var(--muted);margin:-3px 0 9px}.college-card .stat{margin:8px 0}.college-card .stat b{display:block;font-size:.9rem}.college-card .stat span{font-size:.84rem;color:var(--muted)}.target-banner{border:1px solid #bdcdfa;background:#f1f5ff;border-radius:13px;padding:14px;margin:12px 0}.target-banner h3{font-size:1.1rem}.score-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.compare-table{min-width:800px}.match{display:inline-block;border-radius:999px;font-size:.78rem;font-weight:750;padding:4px 8px;background:#eef2f8;color:var(--ink)}.match.good{background:#e7f7ed;color:var(--green);border:0}.match.warn{background:#fff3d7;color:#875a00}.match.bad{background:#feeceb;color:var(--red)}.requirement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.requirement-item{border:1px solid var(--line);border-radius:12px;padding:12px}.requirement-item .bar{margin:8px 0}.target-card-actions{display:flex;gap:8px;margin-top:12px}.target-card-actions button{width:100%}.college-sources{font-size:.85rem}.college-sources li{margin:5px 0}
+.save-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-3px 0 16px;padding:11px 13px;background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:.9rem}
+.save-strip button{flex:0 0 auto}.save-strip #saveStatus{flex:1;min-width:220px}
+@media(max-width:600px){.save-strip button{width:100%}}
+@media(max-width:800px){.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.college-grid,.requirement-grid{grid-template-columns:1fr}}@media(max-width:700px){.half,.third{grid-column:span 12}.req-list{grid-template-columns:1fr}.card{padding:14px}.table-wrap{margin-right:-4px}.score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tabs{gap:6px}.tab{padding:9px 11px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>My High School Planner</h1><p>An editable course tracker with an integrated GPA calculator, automatic graduation-credit totals, and aviation college planning. Grade 9 credits and marks are taken from the transcript you provided; later course statuses are based on your answers.</p></div></header>
+<main>
+<div class="tabs" role="tablist">
+<button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="courses">My courses + GPA</button><button class="tab" data-tab="requirements">Requirements</button><button class="tab" data-tab="collegeTargets">College targets</button>
+</div>
+<div class="save-strip">
+  <span id="saveStatus" role="status" aria-live="polite">Autosave is ready. Your changes will be stored in this browser.</span>
+  <button type="button" class="secondary" id="saveNow">Save now</button>
+</div>
+<section id="overview" class="panel active">
+<div class="grid">
+<div class="card third"><div class="muted">Credits counted as earned</div><div class="metric" id="earnedMetric">0.00</div><div class="small">Based on courses marked “Took & passed” and their editable credit values.</div></div>
+<div class="card third"><div class="muted">Credits still needed</div><div class="metric" id="remainingMetric">21.50</div><div class="small">Uses the 21.5-credit MPS/Minnesota planning target. Verify local requirements.</div></div>
+<div class="card third"><div class="muted">Graduation progress</div><div class="metric" id="progressMetric">0%</div><div class="bar"><div id="progressBar"></div></div><div class="small" id="progressLabel">0 of 21.5 credits counted</div></div>
+<div class="card half"><h2>Credit snapshot</h2><div id="categorySummary"></div></div>
+<div class="card half"><h2>Alerts to check</h2><div id="alerts"></div></div>
+<div class="card"><h2>How this planner counts credits</h2><p class="muted">Only courses marked <b>Took &amp; passed</b> count as earned. In-progress and future classes are not counted as earned yet. The Overview and Requirements tabs update automatically from course statuses and credit categories in My Courses. Changes autosave to this browser. Use Download backup to keep a portable copy or Restore from backup to import one.</p></div>
+</div></section>
+<section id="courses" class="panel">
+<div class="grid">
+  <div class="card">
+    <h2>GPA snapshot</h2>
+    <p class="muted">Your transcript reports a 3.5900 cumulative unweighted GPA. The past GPA is used as the baseline, and only new grade entries not already included in that baseline are added to the estimate. This prevents double-counting the grades on the attached transcript.</p>
+    <div class="score-grid">
+      <div><label for="pastCumulativeGpa">Past cumulative GPA (from transcript)</label><input id="pastCumulativeGpa" type="number" min="0" max="4" step="0.01" value="3.59"></div>
+      <div><label for="pastGpaCredits">Credits represented in past GPA</label><input id="pastGpaCredits" type="number" min="0" max="100" step="0.25" value="6.50"></div>
+      <div><label>GPA from newly entered grades</label><div class="metric" id="newGradesGpa">—</div><div class="small" id="newGradesCreditLabel">No new grade credits yet</div></div>
+      <div><label>Projected cumulative GPA</label><div class="metric" id="projectedGpaMetric">3.59</div><div class="small">Automatically sent to College Targets</div></div>
+    </div>
+    <p class="small">GPA estimate uses a standard unweighted 4.0 scale (A=4.0, A−=3.7, B+=3.3, B=3.0, B−=2.7, C+=2.3, C=2.0, C−=1.7, D+=1.3, D=1.0, F=0). CR/P marks earn credits but do not affect GPA. Check your school's exact GPA scale. The transcript's 0.25-credit CR entry is excluded from the 6.50 GPA-credit baseline but included in earned credits.</p>
+  </div>
+  <div class="card">
+    <div class="row"><div><h2>My courses</h2><div class="muted">Enter grades right here. Graduation credits, the Requirements tab, and College Targets update from this list.</div></div><button id="addCourse">+ Add course</button></div>
+    <div class="row" style="margin:12px 0"><div><label for="filterStatus">Filter by status</label><select id="filterStatus"><option>All</option><option>Took &amp; passed</option><option>In progress</option><option>Future</option></select></div><div><label for="filterYear">Filter by year</label><select id="filterYear"><option>All</option><option>9th grade</option><option>10th grade</option><option>11th grade</option><option>12th grade</option><option>Unassigned</option></select></div></div>
+    <div class="table-wrap"><table class="course-table"><thead><tr><th>Course / term</th><th>College subject</th><th>Graduation category</th><th>Status</th><th>Year</th><th>Credits</th><th>Grade / mark</th><th>GPA credits</th><th>Already in past GPA?</th><th></th></tr></thead><tbody id="courseRows"></tbody></table></div>
+    <div class="foot">Transcript courses are entered by quarter at 0.25 credit each. They are marked “already in past GPA” so their grades aren't counted twice. For new quarterly grades, add a separate row for each term (usually 0.25 GPA credits). “Credits” control graduation progress; “GPA credits” control GPA weighting.</div>
+  </div>
+  <div class="card"><h2>Data and backup</h2><p class="muted">Your transcript's course marks and earned quarter credits are prefilled without including personal identifiers. The GPA figure comes from the transcript, not a recalculation of rounded letter-grade points.</p><div class="row"><button class="secondary" id="exportBtn">Download backup</button><button class="secondary" id="importBtn">Restore from backup</button><button class="secondary" id="resetBtn">Reset to transcript + my answers</button><input id="importFile" type="file" accept="application/json,.json" hidden></div><p class="small">Autosave works in this browser on this device. Download a backup to move your answers to another browser or device.</p></div>
+</div></section>
+<section id="requirements" class="panel">
+<div class="card">
+<h2>Graduation requirements tracker</h2>
+<p class="muted">Your graduation target is <b>21.5 credits</b>. Earned credits and subject progress below are calculated automatically from My Courses. Only rows marked “Took &amp; passed” count as earned; in-progress and future courses appear only as planned credits. Subject targets are the planner breakdown and should be confirmed with your MPS counselor.</p>
+<div class="row"><div><label for="targetTotal">Total credits required (MPS)</label><input id="targetTotal" type="number" min="0" step="0.25" value="21.5"></div><div><label>Total earned from My Courses</label><div class="metric" id="reqEarnedTotal">6.75</div><div class="small" id="reqTotalRemaining">14.75 credits remaining</div></div></div>
+<div class="req-list" id="requirementsList" style="margin-top:14px"></div>
+<div class="alert" style="margin-top:14px">The category totals help you spot gaps, but a counselor must confirm course equivalencies and prevent double-counting. You can change each course's “Graduation category” in My Courses if your counselor confirms a different mapping.</div>
+</div>
+<div class="card links"><h2>Official references</h2><ul><li><a href="https://education.mn.gov/MDE/dse/gradreq/" target="_blank" rel="noopener">Minnesota Department of Education — Graduation Requirements</a></li><li><a href="https://education.mn.gov/MDE/dse/gradreq/personal/" target="_blank" rel="noopener">Minnesota Department of Education — Personal Finance</a></li><li><a href="https://admissions.tc.umn.edu/academics/high-school-course-expectations" target="_blank" rel="noopener">University of Minnesota Twin Cities — High School Course Expectations</a></li><li><a href="https://www.mpschools.org/" target="_blank" rel="noopener">Minneapolis Public Schools</a></li></ul><p class="small">College preparation is shown separately from diploma requirements. UMN Twin Cities expects 4 years of English, 4 years of math, 3 years of science, 3 years of social studies, 2 years of one second language, and 1 year of visual/performing arts; admission is competitive and expectations can vary by college.</p></div>
+</section>
+<section id="collegeTargets" class="panel">
+  <div class="card">
+    <h2>College & aviation program targets</h2>
+    <p class="muted">Choose a college to make its published admission guidance the main reference for your course plan. Compare GPA benchmarks, high-school course expectations, and ACT/SAT policies. These are planning references, not admission predictions; policies may change before you apply.</p>
+    <div class="score-grid">
+      <div><label for="baseCollege">Base my plan on</label><select id="baseCollege"><option value="und">University of North Dakota — Commercial Aviation</option><option value="mnsu">Minnesota State Mankato — Professional Flight</option><option value="uno">University of Nebraska at Omaha — Professional Flight</option><option value="purdue">Purdue University — Professional Flight Technology</option><option value="erau">Embry-Riddle Aeronautical University — Flight/Aeronautical Science</option><option value="wmu">Western Michigan University — Flight Science</option></select></div>
+      <div><label for="studentGpa">Unweighted GPA (from My Courses)</label><input id="studentGpa" type="number" min="0" max="4" step="0.01" value="3.59" readonly><div class="small">Auto-updates from the past GPA baseline plus newly entered grades.</div></div>
+      <div><label for="studentAct">ACT composite (optional)</label><input id="studentAct" type="number" min="1" max="36" step="1" placeholder="1–36"></div>
+      <div><label for="studentSat">SAT total (optional)</label><input id="studentSat" type="number" min="400" max="1600" step="10" placeholder="400–1600"></div>
+    </div>
+    <div class="row" style="margin-top:8px;align-items:center"><div><label for="classRank">Class rank (if known)</label><select id="classRank"><option value="unknown">Not sure / not reported</option><option value="topHalf">Top 50% of class</option><option value="belowHalf">Below top 50%</option></select></div><div class="muted">Enter whatever you know; leave unknown fields blank. GPA comparisons use unweighted GPA where a published benchmark is available.</div></div>
+    <div id="selectedCollegePanel" class="target-banner" aria-live="polite"></div>
+  </div>
+  <div class="card">
+    <h2>Course requirements for your selected target</h2>
+    <p class="muted">Counts below now sum the credit amounts in My Courses by college subject. They do not verify that a class meets a college's exact definition (for example, a lab science or same-language sequence). “In plan” includes in-progress and future credits; only passed credits are earned.</p>
+    <div id="collegeRequirementChecklist" class="requirement-grid"></div>
+    <div id="selectedCourseNotes"></div>
+  </div>
+  <div class="card">
+    <div class="row"><div><h2>Compare all aviation options</h2><div class="muted">Click “Make my target” to switch the selected requirements guide.</div></div></div>
+    <div id="collegeCards" class="college-grid"></div>
+  </div>
+  <div class="card links">
+    <h2>Official admissions sources</h2>
+    <ul class="college-sources">
+      <li><a href="https://und.edu/programs/commercial-aviation-bsaero/index.html" target="_blank" rel="noopener">UND — Commercial Aviation degree and program-specific GPA</a> · <a href="https://und.edu/admissions/freshmen/index.html" target="_blank" rel="noopener">freshman admissions / core courses / testing</a></li>
+      <li><a href="https://www.mnsu.edu/become-a-student/undergraduate-students/requirements/" target="_blank" rel="noopener">Minnesota State Mankato — undergraduate admission and college-preparation standards</a> · <a href="https://www.mnsu.edu/academic-catalog/undergraduate/aviation-bs-professional-flight/" target="_blank" rel="noopener">Professional Flight major admission</a></li>
+      <li><a href="https://www.unomaha.edu/college-of-public-affairs-and-community-service/aviation/admissions/index.php" target="_blank" rel="noopener">UNO Aviation Institute — admission requirements</a> · <a href="https://www.unomaha.edu/undergraduate-admissions/apply/first-year/requirements.php" target="_blank" rel="noopener">UNO first-year admission details</a></li>
+      <li><a href="https://admission.purdue.edu/become-student/class-profile/" target="_blank" rel="noopener">Purdue — class profile by competitive major</a> · <a href="https://admission.purdue.edu/become-student/first-year-criteria/" target="_blank" rel="noopener">Purdue first-year course and testing criteria</a></li>
+      <li><a href="https://erau.edu/admissions/undergraduate-admissions/first-time-students" target="_blank" rel="noopener">Embry-Riddle — first-time undergraduate admissions</a></li>
+      <li><a href="https://wmich.edu/aviation/academics/aviation-flight-science/flightapp" target="_blank" rel="noopener">Western Michigan — Flight Science application and flight-training eligibility</a></li>
+    </ul>
+    <p class="small">Research checked October 27, 2026. Since you expect to graduate in 2029, re-check each school's requirements in junior and senior year. Flight-program capacity, medical certification, application windows, and scholarship testing rules may be separate from university admission.</p>
+  </div>
+</section>
+</main>
+<script>
+const transcriptRows = [
+  // 2025-26 Grade 9 transcript: credit values and marks copied from the transcript.
+  // These are already represented in the official 3.5900 cumulative GPA.
+  ["Beginning Guitar","Arts","Arts / Fine Arts","Took & passed","9th grade",0.25,"A",0.25,true,1],
+  ["Earth & Space Science","Science","Science","Took & passed","9th grade",0.25,"B+",0.25,true,1],
+  ["English 9","English","English / Language Arts","Took & passed","9th grade",0.25,"B+",0.25,true,1],
+  ["Health","Health","Health","Took & passed","9th grade",0.25,"A",0.25,true,1],
+  ["Intermediate Algebra","Math","Mathematics","Took & passed","9th grade",0.25,"A",0.25,true,1],
+  ["Spanish Language Arts","Electives","Electives","Took & passed","9th grade",0.25,"B",0.25,true,1],
+  ["U.S. History — Spanish DL","Social Studies","Social Studies","Took & passed","9th grade",0.25,"B-",0.25,true,1],
+  ["Beginning Guitar","Arts","Arts / Fine Arts","Took & passed","9th grade",0.25,"A",0.25,true,2],
+  ["Earth & Space Science","Science","Science","Took & passed","9th grade",0.25,"A-",0.25,true,2],
+  ["English 9","English","English / Language Arts","Took & passed","9th grade",0.25,"B+",0.25,true,2],
+  ["Health","Health","Health","Took & passed","9th grade",0.25,"A",0.25,true,2],
+  ["Intermediate Algebra","Math","Mathematics","Took & passed","9th grade",0.25,"A",0.25,true,2],
+  ["Spanish Language Arts","Electives","Electives","Took & passed","9th grade",0.25,"C",0.25,true,2],
+  ["U.S. History — Spanish DL","Social Studies","Social Studies","Took & passed","9th grade",0.25,"A",0.25,true,2],
+  ["Beginning Piano / Keyboarding","Arts","Arts / Fine Arts","Took & passed","9th grade",0.25,"A",0.25,true,3],
+  ["Earth & Space Science","Science","Science","Took & passed","9th grade",0.25,"B",0.25,true,3],
+  ["English 9","English","English / Language Arts","Took & passed","9th grade",0.25,"A-",0.25,true,3],
+  ["Fitness for Life","Physical Education","Physical Education / Fitness","Took & passed","9th grade",0.25,"A",0.25,true,3],
+  ["Intermediate Algebra","Math","Mathematics","Took & passed","9th grade",0.25,"A-",0.25,true,3],
+  ["Spanish Language Arts 9 DL","Electives","Electives","Took & passed","9th grade",0.25,"CR",0,true,3],
+  ["U.S. History — Spanish DL","Social Studies","Social Studies","Took & passed","9th grade",0.25,"A-",0.25,true,3],
+  ["Beginning Piano / Keyboarding","Arts","Arts / Fine Arts","Took & passed","9th grade",0.25,"A",0.25,true,4],
+  ["Earth & Space Science","Science","Science","Took & passed","9th grade",0.25,"B",0.25,true,4],
+  ["English 9","English","English / Language Arts","Took & passed","9th grade",0.25,"A",0.25,true,4],
+  ["Fitness for Life","Physical Education","Physical Education / Fitness","Took & passed","9th grade",0.25,"A",0.25,true,4],
+  ["Intermediate Algebra","Math","Mathematics","Took & passed","9th grade",0.25,"B+",0.25,true,4],
+  ["U.S. History — Spanish DL","Social Studies","Social Studies","Took & passed","9th grade",0.25,"A-",0.25,true,4]
+];
+const plannedRows = [
+  ["English 10","English","English / Language Arts","In progress","10th grade",1,"",0.25,false],
+  ["English 11","English","English / Language Arts","Future","11th grade",1,"",0.25,false],
+  ["English 12","English","English / Language Arts","Future","12th grade",1,"",0.25,false],
+  ["Geometry","Math","Mathematics","In progress","10th grade",1,"",0.25,false],
+  ["Algebra 2","Math","Mathematics","In progress","10th grade",1,"",0.25,false],
+  ["Fourth-year math","Math","Mathematics","Future","12th grade",1,"",0.25,false],
+  ["Biology","Science","Science","In progress","10th grade",1,"",0.25,false],
+  ["Chemistry","Science","Science","Future","11th grade",1,"",0.25,false],
+  ["Physics","Science","Science","Future","12th grade",1,"",0.25,false],
+  ["World History","Social Studies","Social Studies","Future","12th grade",1,"",0.25,false],
+  ["Human Geography","Social Studies","Social Studies","Future","11th grade",0.5,"",0.25,false],
+  ["U.S. Government","Social Studies","Social Studies","Future","12th grade",0.5,"",0.25,false],
+  ["Economics","Social Studies","Social Studies","Future","12th grade",0.5,"",0.25,false],
+  ["Ethnic Studies","Ethnic Studies","Ethnic Studies","In progress","10th grade",0.5,"",0.25,false],
+  ["Personal Finance","Personal Finance","Personal Finance","Future","12th grade",0.5,"",0.25,false],
+  ["Second language — Year 1","World Language","Electives","In progress","10th grade",1,"",0.25,false],
+  ["Second language — Year 2","World Language","Electives","In progress","10th grade",1,"",0.25,false],
+  ["Construction","Electives / CTE","Electives","In progress","10th grade",0.5,"",0.25,false],
+  ["Film","Arts","Electives","In progress","10th grade",0.5,"",0.25,false]
+];
+const toCourse = (row, id, term=null) => ({id, name:row[0], subject:row[1], reqCategory:row[2], status:row[3], year:row[4], credits:row[5], grade:row[6]||"", gpaCredits:row[7]??0.25, includedInPastGpa:!!row[8], term, source:term?"Transcript":"Planned"});
+const initialCourses = [...transcriptRows.map(r=>toCourse(r,0,r[9])), ...plannedRows.map(r=>toCourse(r,0,null))];
+let courses = initialCourses.map((c,i)=>({...c,id:i+1}));
+let nextCourseId = courses.length+1;
+const gradePoints = {"A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"C-":1.7,"D+":1.3,"D":1,"F":0};
+const reqs = [
+{name:"English / Language Arts",target:4,note:"Four English credits; college targets may expect four years."},
+{name:"Mathematics",target:3,note:"MPS graduation subject target; college preparation often expects a fourth year."},
+{name:"Science",target:3,note:"Plan for Earth/space, life science, and chemistry or physics; check lab requirements."},
+{name:"Social Studies",target:3.5,note:"Plan for U.S. history, geography, world history, government/citizenship, and economics."},
+{name:"Ethnic Studies",target:0.5,note:"Verify the correct MPS course and credit value."},
+{name:"Personal Finance",target:0.5,note:"Plan to complete the required personal finance course."},
+{name:"Physical Education / Fitness",target:0.5,note:"Credit amount is based on the classes you list; verify school mapping."},
+{name:"Health",target:0.5,note:"Credit amount is based on your transcript."},
+{name:"Arts / Fine Arts",target:1,note:"The transcript contains guitar and piano/keyboard credits; new courses should be confirmed."},
+{name:"Electives",target:5,note:"Includes electives and additional credits assigned to this category in the planner."}
+];
+const colleges = {
+und:{id:"und",name:"University of North Dakota",short:"UND",program:"Commercial Aviation (B.S. Aeronautics)",location:"Grand Forks, North Dakota",gpaText:"3.25 minimum unweighted GPA for Commercial Aviation consideration",gpaValue:3.25,gpaType:"minimum",testText:"ACT/SAT are not required for admission. Scores may help with placement or scholarships; there is no aviation admission score cutoff listed.",testPolicy:"optional",actRange:null,satRange:null,courseText:"4 English; 3 math (Algebra I or higher); 3 lab sciences; 3 social studies; plus 1 additional unit from English, math, lab science, social studies, or world language.",targets:[{key:"English",need:4,label:"English",note:"Four years/units."},{key:"Math",need:3,label:"Math",note:"Three units of Algebra I or higher."},{key:"Science",need:3,label:"Lab science",note:"Three lab-science units; confirm each selected course includes lab work."},{key:"Social Studies",need:3,label:"Social studies",note:"Three units."}],extraNote:"Also plan one additional academic unit from English, math, lab science, social studies, or world language.",flightNote:"UND's Commercial Aviation and Aviation Management degrees have program-specific application windows and competitive selection. The published GPA requirement can change by entry term.",links:[{label:"Commercial Aviation program",url:"https://und.edu/programs/commercial-aviation-bsaero/index.html"},{label:"Freshman requirements",url:"https://und.edu/admissions/freshmen/index.html"}]},
+mnsu:{id:"mnsu",name:"Minnesota State University, Mankato",short:"Minnesota State Mankato",program:"Aviation, B.S. — Professional Flight",location:"Mankato, Minnesota",gpaText:"Automatic admission route: 3.00 GPA OR top 50% class rank OR ACT 21+ with GPA at least 2.70",gpaValue:3,gpaType:"route",testText:"Test-optional for university admission. An ACT score of 21+ is one route only when paired with at least a 2.70 GPA; other routes are GPA or class rank.",testPolicy:"conditional",actMin:21,courseText:"4 English; 3 math (2 years algebra and 1 geometry); 3 science with labs (at least biological and physical science); 3 social studies including U.S. history and geography; 2 years of the same world language; 1 year of world culture or the arts.",targets:[{key:"English",need:4,label:"English",note:"Four years."},{key:"Math",need:3,label:"Math",note:"Must include two years of algebra and one of geometry."},{key:"Science",need:3,label:"Science with labs",note:"Include biological and physical science; labs are expected."},{key:"Social Studies",need:3,label:"Social studies",note:"Include U.S. history and geography."},{key:"World Language",need:2,label:"Same world language",note:"Both years must be the same language."},{key:"Arts",need:1,label:"World culture or arts",note:"Your Fine Arts entry is a candidate; confirm it meets Mankato's rule."}],extraNote:"Professional Flight major admission is later than university admission: the current catalog lists 30 earned college credits, a 2.75 cumulative college GPA, and a C+ or better in the first ground-school course.",flightNote:"Flight-program admission is a separate step after starting college. It is not guaranteed just because you are admitted to the university.",links:[{label:"Undergraduate requirements",url:"https://www.mnsu.edu/become-a-student/undergraduate-students/requirements/"},{label:"Professional Flight major",url:"https://www.mnsu.edu/academic-catalog/undergraduate/aviation-bs-professional-flight/"}]},
+uno:{id:"uno",name:"University of Nebraska at Omaha",short:"UNO",program:"B.S. Aviation — Professional Flight",location:"Omaha, Nebraska",gpaText:"One freshman admission route: 3.00 GPA OR top 50% class rank OR ACT 20+ OR SAT 1040+",gpaValue:3,gpaType:"route",testText:"Scores can be one admission route; when GPA is at least 3.00 or rank is in the top half, a test score is not the only route. The Aviation Institute does not require a separate application after UNO admission.",testPolicy:"conditional",actMin:20,satMin:1040,courseText:"16 units: 4 English; 3 math including Algebra I, Algebra II and Geometry; 3 social science; 3 natural science (at least 2 from biology, chemistry, physics, earth science, and at least 1 with a lab); 2 years of the same world language; 1 additional academic unit.",targets:[{key:"English",need:4,label:"English",note:"Four units with intensive reading and writing."},{key:"Math",need:3,label:"Math",note:"Include Algebra I, Algebra II and Geometry."},{key:"Science",need:3,label:"Natural science",note:"At least two biology/chemistry/physics/earth science; one lab course."},{key:"Social Studies",need:3,label:"Social science",note:"Include history and one from history/government/geography."},{key:"World Language",need:2,label:"Same world language",note:"Two years of one language are the expected pathway."}],extraNote:"UNO's published freshman course list asks for one additional academic unit beyond the areas above. Some applicants without two high-school world-language years may still be admitted, but may need language coursework later. UNO's central admissions page currently lists SAT 1040 as an alternative score route, while an Aviation Institute page lists a different threshold; confirm the current rule with UNO before applying.",flightNote:"Admission to UNO is the route into the Aviation Institute; its Professional Flight concentration is designed for students pursuing professional pilot training.",links:[{label:"UNO Aviation admissions",url:"https://www.unomaha.edu/college-of-public-affairs-and-community-service/aviation/admissions/index.php"},{label:"UNO first-year requirements",url:"https://www.unomaha.edu/undergraduate-admissions/apply/first-year/requirements.php"}]},
+purdue:{id:"purdue",name:"Purdue University",short:"Purdue",program:"Professional Flight Technology",location:"West Lafayette, Indiana",gpaText:"Flight-major class profile: middle 50% high-school GPA 3.87–4.00 (competitive reference, not a guaranteed cutoff)",gpaValue:3.87,gpaMax:4,gpaType:"profile",testText:"Purdue expects an ACT, SAT, or CLT score in its current first-year process, with limited exceptions. Professional Flight Technology middle 50%: ACT 32–34 or SAT 1310–1480.",testPolicy:"expected",actRange:[32,34],satRange:[1310,1480],courseText:"4 years math; 4 years English; 3 years lab science; 3 years social studies; 2 years world language (can be different languages).",targets:[{key:"English",need:4,label:"English",note:"Four years."},{key:"Math",need:4,label:"Math",note:"Four years."},{key:"Science",need:3,label:"Lab science",note:"Three years."},{key:"Social Studies",need:3,label:"Social studies",note:"Three years."},{key:"World Language",need:2,label:"World language",note:"Two years; languages may differ."}],extraNote:"Professional Flight Technology is highly selective. Purdue's currently published class profile shows a 7.5% admit rate for this major; profile ranges describe recent admitted students, not a promise of admission.",flightNote:"Treat Purdue as a high-reach option unless later grades and scores align with the published competitive profile. Keep a balanced list of aviation programs.",links:[{label:"Purdue class profile",url:"https://admission.purdue.edu/become-student/class-profile/"},{label:"Purdue first-year criteria",url:"https://admission.purdue.edu/become-student/first-year-criteria/"}]},
+erau:{id:"erau",name:"Embry-Riddle Aeronautical University",short:"Embry-Riddle",program:"Aeronautical Science / flight pathway (Daytona Beach or Prescott)",location:"Florida or Arizona",gpaText:"No hard GPA cutoff published; competitive residential applicants typically have a 3.0+ GPA",gpaValue:3,gpaType:"typical",testText:"ACT/SAT are optional but strongly encouraged. No universal score cutoff is posted for first-year admission; program/campus details can vary.",testPolicy:"optional",actRange:null,satRange:null,courseText:"4 years English; 3 years college-preparatory math (4 preferred); 3 years social science; 2 years science including at least 1 lab (3 years preferred).",targets:[{key:"English",need:4,label:"English",note:"Four years."},{key:"Math",need:3,label:"College-prep math",note:"Three years; four preferred."},{key:"Science",need:2,label:"Science",note:"At least two years and one lab; three preferred."},{key:"Social Studies",need:3,label:"Social science",note:"Three years."}],extraNote:"Flight students must submit the required FAA medical certificate before they can enroll in flight classes. This is separate from college admission.",flightNote:"This is a specialized aviation university; compare flight-training costs, financial aid, campus, and program availability carefully as well as admission benchmarks.",links:[{label:"First-time student admissions",url:"https://erau.edu/admissions/undergraduate-admissions/first-time-students"}]},
+wmu:{id:"wmu",name:"Western Michigan University",short:"Western Michigan",program:"Flight Science",location:"Kalamazoo, Michigan",gpaText:"3.00 high-school GPA minimum for incoming freshmen applying for Flight Science flight training",gpaValue:3,gpaType:"minimum",testText:"The Flight Science flight-application page does not list an ACT/SAT score as a flight-slot criterion. Check WMU's general first-year admission policy separately.",testPolicy:"notlisted",actRange:null,satRange:null,courseText:"Flight-specific math readiness: complete WMU MATH 1100 or higher with C or better, transfer an equivalent, pass AP Calculus AB/BC, or place into MATH 1110+ by ALEKS. The flight application page does not specify a full set of high-school course-year minimums.",targets:[],extraNote:"Students need a valid FAA First- or Second-Class medical certificate by the program's stated deadline before flight training; flight slots are capacity-limited.",flightNote:"WMU's 3.00 GPA is a minimum for the listed incoming-freshman flight application, not a guarantee of a flight slot.",links:[{label:"Flight Science application requirements",url:"https://wmich.edu/aviation/academics/aviation-flight-science/flightapp"}]}
+};
+
+const $=id=>document.getElementById(id);
+
+const AUTOSAVE_KEY = "mpsFlightHighSchoolPlanner_autosave_v1";
+function setSaveStatus(message, isError=false){
+ const el=$("saveStatus");
+ if(!el)return;
+ el.textContent=message;
+ el.style.color=isError?"var(--red)":"var(--muted)";
+}
+function plannerSettings(){
+ return {
+  pastCumulativeGpa:$("pastCumulativeGpa")?.value ?? "3.59",
+  pastGpaCredits:$("pastGpaCredits")?.value ?? "6.50",
+  targetTotal:$("targetTotal")?.value ?? "21.5",
+  baseCollege:$("baseCollege")?.value ?? "und",
+  studentAct:$("studentAct")?.value ?? "",
+  studentSat:$("studentSat")?.value ?? "",
+  classRank:$("classRank")?.value ?? "unknown",
+  filterStatus:$("filterStatus")?.value ?? "All",
+  filterYear:$("filterYear")?.value ?? "All"
+ };
+}
+function savePlannerData(){
+ try{
+  const snapshot={version:1,savedAt:new Date().toISOString(),courses:courses,settings:plannerSettings(),activeTab:document.querySelector(".tab.active")?.dataset.tab || "overview"};
+  localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(snapshot));
+  const time=new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+  setSaveStatus("Autosaved in this browser at "+time+".");
+  return true;
+ }catch(err){
+  setSaveStatus("Browser autosave is unavailable here. Use Download backup to keep your answers.",true);
+  return false;
+ }
+}
+function restorePlannerData(data, fromAutosave=false){
+ if(!data || !Array.isArray(data.courses))throw new Error("This file doesn't contain a valid course list.");
+ courses=data.courses.map((c,i)=>({...c,id:Number.isFinite(Number(c.id))?Number(c.id):i+1}));
+ nextCourseId=courses.reduce((m,c)=>Math.max(m,num(c.id)),0)+1;
+ const st=data.settings || data;
+ const values={
+  pastCumulativeGpa:st.pastCumulativeGpa,
+  pastGpaCredits:st.pastGpaCredits,
+  targetTotal:st.targetTotal ?? st.targetCredits,
+  baseCollege:st.baseCollege ?? st.collegeTarget,
+  studentAct:st.studentAct ?? st.act,
+  studentSat:st.studentSat ?? st.sat,
+  classRank:st.classRank
+ };
+ Object.entries(values).forEach(([id,value])=>{const el=$(id);if(el && value!==undefined && value!==null)el.value=String(value);});
+ if(st.filterStatus!==undefined && $("filterStatus"))$("filterStatus").value=st.filterStatus;
+ if(st.filterYear!==undefined && $("filterYear"))$("filterYear").value=st.filterYear;
+ if(data.activeTab){
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===data.activeTab));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id===data.activeTab));
+ }
+ if(!fromAutosave){renderAll();setSaveStatus("Backup restored and autosaved in this browser.");}
+}
+function loadAutosavedData(){
+ try{
+  const raw=localStorage.getItem(AUTOSAVE_KEY);
+  if(!raw){setSaveStatus("Autosave is on. Changes are stored in this browser on this device.");return false;}
+  const data=JSON.parse(raw);
+  restorePlannerData(data,true);
+  const when=data.savedAt?new Date(data.savedAt):null;
+  const label=when&&!Number.isNaN(when.getTime())?when.toLocaleString():"your last session";
+  setSaveStatus("Restored your saved planner from "+label+".");
+  return true;
+ }catch(err){setSaveStatus("Could not read the browser save. You can restore a Download backup file.",true);return false;}
+}
+
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function num(v){let n=parseFloat(v);return Number.isFinite(n)&&n>=0?n:0}
+function fmt(n){return Number(n).toFixed(2).replace(/\.00$/ ,"")}
+const statusOptions = ["Took & passed","In progress","Future"];
+const yearOptions = ["9th grade","10th grade","11th grade","12th grade","Unassigned"];
+const subjectOptions = ["English","Math","Science","Social Studies","World Language","Arts","Physical Education","Health","Electives","Electives / CTE","Personal Finance","Ethnic Studies"];
+const reqCategoryOptions = reqs.map(r=>r.name);
+function courseLabel(c){return c.term?`${c.name} — Term ${c.term}`:c.name;}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("active",x.id===b.dataset.tab));savePlannerData();}));
+function courseTable(){
+ const fs=$("filterStatus").value, fy=$("filterYear").value;
+ const gradeOptions = ["","A+","A","A-","B+","B","B-","C+","C","C-","D+","D","F","CR","P"];
+ $("courseRows").innerHTML=courses.filter(c=>(fs==="All"||c.status===fs)&&(fy==="All"||c.year===fy)).map(c=>`<tr data-id="${c.id}">
+ <td><input class="course-name" data-field="name" value="${esc(courseLabel(c))}" aria-label="Course name"></td>
+ <td><select data-field="subject" aria-label="College subject">${subjectOptions.map(v=>`<option value="${esc(v)}" ${c.subject===v?"selected":""}>${esc(v)}</option>`).join("")}</select></td>
+ <td><select data-field="reqCategory" aria-label="Graduation category">${reqCategoryOptions.map(v=>`<option value="${esc(v)}" ${c.reqCategory===v?"selected":""}>${esc(v)}</option>`).join("")}</select></td>
+ <td><select data-field="status">${statusOptions.map(v=>`<option value="${esc(v)}" ${c.status===v?"selected":""}>${esc(v)}</option>`).join("")}</select></td>
+ <td><select data-field="year">${yearOptions.map(v=>`<option value="${esc(v)}" ${c.year===v?"selected":""}>${esc(v)}</option>`).join("")}</select></td>
+ <td><input data-field="credits" type="number" min="0" max="10" step="0.25" value="${c.credits}" aria-label="Course credits"></td>
+ <td><select data-field="grade" aria-label="Grade / mark">${gradeOptions.map(v=>`<option value="${v}" ${c.grade===v?"selected":""}>${v||"—"}</option>`).join("")}</select></td>
+ <td><input data-field="gpaCredits" type="number" min="0" max="10" step="0.25" value="${c.gpaCredits}" aria-label="GPA credits"></td>
+ <td style="text-align:center"><input data-field="includedInPastGpa" type="checkbox" ${c.includedInPastGpa?"checked":""} aria-label="Already included in past GPA"></td>
+ <td><button class="danger remove-course" title="Remove course" aria-label="Remove ${esc(courseLabel(c))}">×</button></td></tr>`).join("");
+ $("courseRows").querySelectorAll("tr").forEach(tr=>{
+   const id=+tr.dataset.id;
+   tr.querySelectorAll("[data-field]").forEach(el=>el.addEventListener("change",()=>{
+     const c=courses.find(x=>x.id===id), f=el.dataset.field;
+     if(!c)return;
+     let value=f==="includedInPastGpa"?el.checked:el.value;
+     if(["credits","gpaCredits"].includes(f))value=num(value);
+     if(f==="name"){
+       // Keep the editable course label intact; transcript term rows still retain their source-term metadata.
+       c.name=value.replace(/ — Term [1-4]$/," ").trim();
+       c.term=null;
+     } else c[f]=value;
+     renderAll();
+   }));
+   tr.querySelector(".remove-course").addEventListener("click",()=>{courses=courses.filter(c=>c.id!==id);renderAll();});
+ });
+}
+function earnedCourseTotal(){return courses.filter(c=>c.status==="Took & passed").reduce((s,c)=>s+num(c.credits),0)}
+function creditsForCategory(category,status){return courses.filter(c=>c.reqCategory===category&&(!status||c.status===status)).reduce((s,c)=>s+num(c.credits),0)}
+function creditsForSubject(subject,status){return courses.filter(c=>c.subject===subject&&(!status||c.status===status)).reduce((s,c)=>s+num(c.credits),0)}
+function reqList(){
+ $("requirementsList").innerHTML=reqs.map((r,i)=>{
+   const earned=creditsForCategory(r.name,"Took & passed"), current=creditsForCategory(r.name,"In progress"), future=creditsForCategory(r.name,"Future");
+   const remaining=Math.max(0,r.target-earned),planned=earned+current+future;
+   const pct=Math.min(100,r.target?100*earned/r.target:0),plannedPct=Math.min(100,r.target?100*planned/r.target:0);
+   const cls=earned>=r.target?"good":"";
+   return `<div class="req"><div class="req-head"><div><h3>${esc(r.name)}</h3><div class="small">${esc(r.note)}</div></div><span class="status">${fmt(r.target)} required</span></div><div class="row" style="margin-top:8px"><span>Earned</span><b style="text-align:right">${fmt(earned)} / ${fmt(r.target)}</b></div><div class="bar"><div style="width:${pct}%;background:${earned>=r.target?'var(--green)':'var(--accent)'}"></div></div><div class="small">${fmt(current)} in progress · ${fmt(future)} future</div><div class="small">${fmt(remaining)} credits still needed in this category</div><div class="small" style="margin-top:4px">${planned+0.001>=r.target?'Current plan covers this category.':'Current plan may leave a gap of '+fmt(Math.max(0,r.target-planned))+' credit(s).'}</div></div>`;
+ }).join("");
+}
+function renderOverview(){
+ const earned=earnedCourseTotal(),target=num($("targetTotal").value)||21.5,remaining=Math.max(0,target-earned),pct=Math.min(100,earned/target*100);
+ $("earnedMetric").textContent=fmt(earned);$("remainingMetric").textContent=fmt(remaining);$("progressMetric").textContent=Math.round(pct)+"%";$("progressBar").style.width=pct+"%";$("progressLabel").textContent=`${fmt(earned)} of ${fmt(target)} credits counted`;
+ const sum={};courses.filter(c=>c.status==="Took & passed").forEach(c=>sum[c.reqCategory]=(sum[c.reqCategory]||0)+num(c.credits));
+ $("categorySummary").innerHTML=Object.entries(sum).map(([k,v])=>`<div class="row" style="margin:8px 0"><span>${esc(k)}</span><b style="text-align:right">${fmt(v)}</b></div>`).join("")||'<p class="muted">No passed-course credits counted yet.</p>';
+ const planned=courses.filter(c=>c.status!=="Took & passed").reduce((s,c)=>s+num(c.credits),0), allPlanned=earned+planned;
+ const a=[];
+ a.push(`Transcript credit baseline: 6.75 earned credits from Grade 9. Credits still needed to reach the 21.5 goal: ${fmt(remaining)}.`);
+ if(courses.some(c=>c.status==="In progress"))a.push("In-progress courses count as planned, not earned, until marked Took & passed.");
+ if(creditsForCategory("Personal Finance","Took & passed")<0.5)a.push("Personal Finance is not marked passed yet; keep it in your future plan.");
+ if(creditsForCategory("English / Language Arts","Took & passed")+creditsForCategory("English / Language Arts","In progress")+creditsForCategory("English / Language Arts","Future")<4)a.push("Your current course plan may not cover all 4 English credits.");
+ if(creditsForCategory("Mathematics","Took & passed")+creditsForCategory("Mathematics","In progress")+creditsForCategory("Mathematics","Future")<3)a.push("Your current course plan may not cover the 3-credit math target.");
+ if(creditsForCategory("Science","Took & passed")+creditsForCategory("Science","In progress")+creditsForCategory("Science","Future")<3)a.push("Your current course plan may not cover the 3-credit science target.");
+ if(creditsForCategory("Electives","Took & passed")+creditsForCategory("Electives","In progress")+creditsForCategory("Electives","Future")<5)a.push(`Your current elective category is short ${fmt(5-(creditsForCategory("Electives","Took & passed")+creditsForCategory("Electives","In progress")+creditsForCategory("Electives","Future")))} planned credits; add courses as needed.`);
+ a.push(`${fmt(allPlanned)} credits are currently listed across completed, in-progress, and future rows. Some college-prep courses can take you above the 21.5 minimum, while category-specific gaps may still need attention.`);
+ $("alerts").innerHTML=a.map((x,i)=>`<div class="alert ${i===0?'good':''}">${esc(x)}</div>`).join("");
+}
+function renderReqs(){
+ reqList();
+ const earned=earnedCourseTotal(), target=num($("targetTotal").value)||21.5;
+ $("reqEarnedTotal").textContent=fmt(earned);
+ $("reqTotalRemaining").textContent=`${fmt(Math.max(0,target-earned))} credits remaining to the ${fmt(target)}-credit goal`;
+}
+function renderGpa(){
+ const pastGpa=num($("pastCumulativeGpa").value), pastCredits=num($("pastGpaCredits").value);
+ const eligible=courses.filter(c=>!c.includedInPastGpa&&c.status!=="Future"&&Object.prototype.hasOwnProperty.call(gradePoints,c.grade)&&num(c.gpaCredits)>0);
+ let addedPoints=0, addedCredits=0;
+ eligible.forEach(c=>{addedPoints+=gradePoints[c.grade]*num(c.gpaCredits);addedCredits+=num(c.gpaCredits)});
+ const newGpa=addedCredits>0?addedPoints/addedCredits:null;
+ const projectedDenom=pastCredits+addedCredits;
+ const projected=projectedDenom>0?((pastGpa*pastCredits)+addedPoints)/projectedDenom:null;
+ $("newGradesGpa").textContent=newGpa===null?"—":newGpa.toFixed(2);
+ $("newGradesCreditLabel").textContent=addedCredits>0?`${fmt(addedCredits)} new GPA credits included`:"No new grade credits yet";
+ $("projectedGpaMetric").textContent=projected===null?"—":projected.toFixed(2);
+ $("studentGpa").value=projected===null?"":projected.toFixed(2);
+}
+function courseMatches(key){
+ const map={"English":["English"],"Math":["Math"],"Science":["Science"],"Social Studies":["Social Studies"],"World Language":["World Language"],"Arts":["Arts","World Culture"]};
+ const subjects=map[key]||[key];
+ return courses.filter(c=>subjects.includes(c.subject));
+}
+function fmtCount(x){return String(x);}
+function statusCount(cset,status){return cset.filter(c=>c.status===status).reduce((s,c)=>s+num(c.credits),0);}
+function renderCollegeTargets(){
+ const select=$("baseCollege"); if(!select)return;
+ const id=select.value||"und", target=colleges[id];
+ const gpaValue=$("studentGpa").value===""?null:num($("studentGpa").value);
+ const actValue=$("studentAct").value===""?null:num($("studentAct").value);
+ const satValue=$("studentSat").value===""?null:num($("studentSat").value);
+ const rank=$("classRank").value;
+ function statusFor(c){
+   if(gpaValue===null)return {label:"Enter GPA to compare",cls:""};
+   if(c.gpaType==="route"){
+     const gpaRoute=gpaValue>=3.0;
+     const rankRoute=rank==="topHalf";
+     const testRoute=c.id==="mnsu"?(gpaValue>=2.7&&actValue!==null&&actValue>=21):((actValue!==null&&actValue>=20)||(satValue!==null&&satValue>=1040));
+     const testAllowed=c.id==="mnsu"?testRoute:((actValue!==null&&actValue>=20)||(satValue!==null&&satValue>=1040));
+     if(gpaRoute||rankRoute||testAllowed)return {label:"Matches at least one listed admission route",cls:"good"};
+     if(c.id==="mnsu")return {label:"No listed route matched from entered details",cls:"warn"};
+     return {label:"No listed route matched from entered details",cls:"warn"};
+   }
+   if(c.gpaType==="profile")return gpaValue>=c.gpaValue?{label:"At/above lower edge of profile range",cls:"good"}:{label:"Below recent middle-50% GPA range",cls:"warn"};
+   if(c.gpaType==="typical")return gpaValue>=c.gpaValue?{label:"At/above typical competitive reference",cls:"good"}:{label:"Below typical competitive reference (not a cutoff)",cls:"warn"};
+   return gpaValue>=c.gpaValue?{label:"At/above published GPA benchmark",cls:"good"}:{label:"Below published GPA benchmark",cls:"bad"};
+ }
+ function testStatus(c){
+   if(c.id==="purdue"){
+     if(actValue!==null&&c.actRange){if(actValue<c.actRange[0])return {label:`ACT ${actValue}: below ${c.actRange[0]}–${c.actRange[1]} middle-50% range`,cls:"warn"};if(actValue<=c.actRange[1])return {label:`ACT ${actValue}: within ${c.actRange[0]}–${c.actRange[1]} middle-50% range`,cls:"good"};return {label:`ACT ${actValue}: above recent middle-50% range`,cls:"good"};}
+     if(satValue!==null&&c.satRange){if(satValue<c.satRange[0])return {label:`SAT ${satValue}: below ${c.satRange[0]}–${c.satRange[1]} middle-50% range`,cls:"warn"};if(satValue<=c.satRange[1])return {label:`SAT ${satValue}: within ${c.satRange[0]}–${c.satRange[1]} middle-50% range`,cls:"good"};return {label:`SAT ${satValue}: above recent middle-50% range`,cls:"good"};}
+     return {label:"ACT/SAT/CLT expected; enter ACT or SAT to compare with the published flight-major range",cls:"warn"};
+   }
+   if(c.id==="uno"){
+     if((gpaValue!==null&&gpaValue>=3)||(rank==="topHalf"))return {label:"Test score not needed to use the GPA/rank route",cls:"good"};
+     if(actValue!==null&&actValue>=20)return {label:"ACT meets the published 20+ alternative route",cls:"good"};
+     if(satValue!==null&&satValue>=1040)return {label:"SAT meets the published 1040+ alternative route",cls:"good"};
+     return {label:"ACT 20+ or SAT 1040+ is an alternative if GPA/rank routes are not met",cls:"warn"};
+   }
+   if(c.id==="mnsu"){
+     if((gpaValue!==null&&gpaValue>=3)||(rank==="topHalf"))return {label:"Test-optional; GPA/rank route is available from entered details",cls:"good"};
+     if(gpaValue!==null&&gpaValue>=2.7&&actValue!==null&&actValue>=21)return {label:"Meets the ACT 21+ and GPA 2.7+ alternate route",cls:"good"};
+     return {label:"Test-optional; ACT 21+ is one route when GPA is at least 2.7",cls:"warn"};
+   }
+   if(c.id==="und")return {label:"ACT/SAT not required for admission",cls:"good"};
+   if(c.id==="erau")return {label:"ACT/SAT optional but strongly encouraged",cls:""};
+   return {label:"No test score criterion listed on the Flight Science flight application page",cls:""};
+ }
+ const gpaStatus=statusFor(target), tStatus=testStatus(target);
+ $("selectedCollegePanel").innerHTML=`<h3>${esc(target.name)} — ${esc(target.program)}</h3><div class="muted">${esc(target.location)} · Selected as your planning baseline</div><div class="row" style="margin-top:10px"><div><b>GPA benchmark</b><div>${esc(target.gpaText)}</div><p><span class="match ${gpaStatus.cls}">${esc(gpaStatus.label)}</span></p></div><div><b>Standardized testing</b><div>${esc(target.testText)}</div><p><span class="match ${tStatus.cls}">${esc(tStatus.label)}</span></p></div></div><p class="small">${esc(target.flightNote)}</p>`;
+ const list=$("collegeRequirementChecklist");
+ if(target.targets.length){
+   list.innerHTML=target.targets.map(r=>{
+     const matched=courseMatches(r.key),passed=statusCount(matched,"Took & passed"),current=statusCount(matched,"In progress"),future=statusCount(matched,"Future"),planned=passed+current+future,ratio=Math.min(100,planned/Math.max(1,r.need)*100),covered=planned+0.001>=r.need;
+     const cls=covered?"good":"warn";
+     const names=matched.length?[...new Set(matched.map(c=>c.name))].map(n=>esc(n)).join(" · "):"No matching classes in course list";
+     let extraNotice="";
+     if(r.key==="World Language")extraNotice=" The planner does not know whether both language classes are in the same language yet.";
+     if(r.key==="Science")extraNotice=" Lab status is not recorded; confirm course lab requirements with the college.";
+     return `<div class="requirement-item"><div class="req-head"><div><h3>${esc(r.label)}</h3><div class="small">${esc(r.note)}</div></div><span class="match ${cls}">${covered?"In plan":"Potential gap"}</span></div><div><b>${fmt(planned)} credits planned / ${r.need} required</b></div><div class="bar"><div style="width:${ratio}%"></div></div><div class="small">${fmt(passed)} earned · ${fmt(current)} in progress · ${fmt(future)} future.${esc(extraNotice)}</div><div class="small" style="margin-top:6px">${names}</div></div>`;
+   }).join("");
+ } else {
+   list.innerHTML=`<div class="requirement-item"><h3>Flight Science course readiness</h3><p class="muted">${esc(target.courseText)}</p><p class="small">This program's flight-application page does not give a full course-years checklist, so the planner won't invent one.</p></div>`;
+ }
+ $("selectedCourseNotes").innerHTML=`<div class="alert">${esc(target.courseText)}</div><div class="alert">${esc(target.extraNote)}</div><p class="small">A course entry marked passed, in progress, or future is matched by its category for planning only. Colleges may count courses differently, and lab / language / unit details have not been verified. ${target.links.map(l=>`<a href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(" · ")}</p>`;
+ $("collegeCards").innerHTML=Object.values(colleges).map(c=>{
+   const gs=statusFor(c),ts=testStatus(c),selected=c.id===id;
+   return `<div class="college-card ${selected?"target-selected":""}"><h3>${esc(c.name)}</h3><div class="program">${esc(c.program)}</div><div class="small">${esc(c.location)}</div><div class="stat"><b>GPA</b><span>${esc(c.gpaText)}</span></div><div class="stat"><b>Tests</b><span>${esc(c.testText)}</span></div><div class="stat"><b>High-school course baseline</b><span>${esc(c.courseText)}</span></div><div style="margin-top:9px"><span class="match ${gs.cls}">${esc(gs.label)}</span></div><div style="margin-top:6px"><span class="match ${ts.cls}">${esc(ts.label)}</span></div><div class="target-card-actions"><button class="${selected?"secondary":""}" data-select-college="${c.id}" ${selected?"disabled":""}>${selected?"Current target":"Make my target"}</button></div><p class="small" style="margin-bottom:0">${c.links.map(l=>`<a href="${l.url}" target="_blank" rel="noopener">Official details</a>`).join(" · ")}</p></div>`;
+ }).join("");
+ $("collegeCards").querySelectorAll("[data-select-college]").forEach(btn=>btn.addEventListener("click",()=>{$("baseCollege").value=btn.dataset.selectCollege;renderCollegeTargets();savePlannerData();}));
+}
+
+function renderAll(){courseTable();renderOverview();renderReqs();renderGpa();renderCollegeTargets();savePlannerData();}
+$("filterStatus").addEventListener("change",()=>{courseTable();savePlannerData();});$("filterYear").addEventListener("change",()=>{courseTable();savePlannerData();});
+$("addCourse").addEventListener("click",()=>{courses.push({id:nextCourseId++,name:"New course",subject:"Electives",reqCategory:"Electives",status:"Future",year:"Unassigned",credits:0.25,grade:"",gpaCredits:0.25,includedInPastGpa:false,term:null,source:"Added"});renderAll();});
+$("targetTotal").addEventListener("change",renderAll);
+["pastCumulativeGpa","pastGpaCredits"].forEach(id=>$(id).addEventListener("input",()=>{renderOverview();renderReqs();renderGpa();renderCollegeTargets();savePlannerData();}));
+
+$("saveNow").addEventListener("click",()=>{if(savePlannerData())setSaveStatus("Saved now in this browser.");});
+$("importBtn").addEventListener("click",()=>$("importFile").click());
+$("importFile").addEventListener("change",async event=>{
+ const file=event.target.files?.[0];
+ if(!file)return;
+ try{
+  const data=JSON.parse(await file.text());
+  restorePlannerData(data,false);
+  alert("Your planner backup was restored.");
+ }catch(err){
+  setSaveStatus("Could not restore that file. Choose a planner JSON backup.",true);
+  alert("Couldn't restore this file. Please choose a JSON backup exported from the planner.");
+ }finally{event.target.value="";}
+});
+
+$("exportBtn").addEventListener("click",()=>{const data={courses,pastCumulativeGpa:num($("pastCumulativeGpa").value),pastGpaCredits:num($("pastGpaCredits").value),targetCredits:num($("targetTotal").value),collegeTarget:$("baseCollege").value,act:$("studentAct").value,sat:$("studentSat").value,classRank:$("classRank").value};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="my-high-school-planner.json";a.click();URL.revokeObjectURL(a.href);});
+$("resetBtn").addEventListener("click",()=>{if(confirm("Reset to the transcript and your original course statuses? Your manual edits will be lost.")){courses=initialCourses.map((c,i)=>({...c,id:i+1}));nextCourseId=courses.length+1;$("targetTotal").value=21.5;$("pastCumulativeGpa").value=3.59;$("pastGpaCredits").value=6.50;$("baseCollege").value="und";$("studentAct").value="";$("studentSat").value="";$("classRank").value="unknown";renderAll();}});
+["baseCollege","studentGpa","studentAct","studentSat","classRank"].forEach(id=>$(id).addEventListener("input",()=>{renderCollegeTargets();savePlannerData();}));
+loadAutosavedData();
+renderAll();
+</script>
+</body>
+</html>

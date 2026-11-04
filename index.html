@@ -159,7 +159,7 @@ const toCourse = (row, id, term=null) => ({id, name:row[0], subject:row[1], reqC
 const initialCourses = [...transcriptRows.map(r=>toCourse(r,0,r[9])), ...plannedRows.map(r=>toCourse(r,0,null))];
 let courses = initialCourses.map((c,i)=>({...c,id:i+1}));
 let nextCourseId = courses.length+1;
-const gradePoints = {"A+":4,"A":4,"A-":3.7,"B+":3.3,"B":3,"B-":2.7,"C+":2.3,"C":2,"C-":1.7,"D+":1.3,"D":1,"F":0};
+const gradePoints = {"A+":4,"A":4,"A-":3 + (2 / 3),"B+":3 + (1 / 3),"B":3,"B-":2 + (2 / 3),"C+":2 + (1 / 3),"C":2,"C-":1 + (2 / 3),"D+":1 + (1 / 3),"D":1,"F":0};
 const reqs = [
 {name:"English / Language Arts",target:4,note:"Four English credits; college targets may expect four years."},
 {name:"Mathematics",target:3,note:"MPS graduation subject target; college preparation often expects a fourth year."},
